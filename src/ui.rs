@@ -40,7 +40,6 @@ pub fn fill_content(mode: String) {
 pub fn get_template_selection() -> String {
     let modes = vec!["Standard".to_string(), "Custom".to_string()];
     select(&modes, "Choose a template category".to_string(), 0)
-
 }
 
 pub fn select(options: &Vec<String>, prompt: String, default: usize) -> String {
@@ -110,4 +109,20 @@ pub fn write_file(content: String) {
         _ => println!("unmatched"),
     }
     
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_select() {
+        let options = vec!["Option 1".to_string(), "Option 2".to_string(), "Option 3".to_string()];
+        let prompt = "Choose an option".to_string();
+        let default = 1;
+
+        let result = select(&options, prompt, default);
+
+        assert_eq!(result, "Option 2");
+    }
 }
