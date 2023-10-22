@@ -2,6 +2,9 @@
 name = "generate-readme"
 version = "0.1.0"
 edition = "2021"
+description = "Create templated README.md files from the terminal."
+repository = "https://github.com/jacobschwantes/readme-generator"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
