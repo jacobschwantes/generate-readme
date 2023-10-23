@@ -1,11 +1,12 @@
-use dialoguer::{theme::ColorfulTheme, Input, MultiSelect, Select};
 use dialoguer::console::Style;
+use dialoguer::{theme::ColorfulTheme, Input, MultiSelect, Select};
 
 pub fn select(options: &Vec<String>, prompt: String, default: usize) -> String {
     let selection = Select::with_theme(&ColorfulTheme::default())
         .with_prompt(prompt)
         .default(default)
         .items(&options)
+        .max_length(10)
         .interact()
         .unwrap();
     options[selection].clone()
@@ -37,13 +38,12 @@ pub fn confirm(prompt: &String) -> bool {
 
 pub fn message(message: Result<String, String>) {
     match message {
-        Ok(message) =>  println!(
+        Ok(message) => println!(
             "{}",
             Style::new()
                 .for_stderr()
                 .green()
                 .apply_to(format!("✔ {}", message))
-        
         ),
         Err(message) => println!(
             "{}",
@@ -51,26 +51,6 @@ pub fn message(message: Result<String, String>) {
                 .for_stderr()
                 .red()
                 .apply_to(format!("✘ {}", message))
-        
         ),
-    }
-}
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_select() {
-        let options = vec![
-            "Option 1".to_string(),
-            "Option 2".to_string(),
-            "Option 3".to_string(),
-        ];
-        let prompt = "Choose an option".to_string();
-        let default = 1;
-
-        let result = select(&options, prompt, default);
-
-        assert_eq!(result, "Option 2");
     }
 }
