@@ -9,11 +9,11 @@
 Generate `README.md` files effortlessly using this lightweight command line utility. While it includes several default templates, its strength lies in its ability to work with your own custom templates.
 
 ## Using Custom Templates:
-1. Create a directory named `readme-templates` inside the `Documents` folder of your operating system.
+1. Create a directory named `readme-templates` inside the `Documents` folder of your operating system (or specify a different directory using `--template-dir` argument).
 2. Add your markdown templates to this directory.
-3. At the beginning of each template, specify placeholders by adding a line like `Placeholder: [placeholder_name_1],[placeholder_name_2]`. Avoid spaces between placeholders.
+3. At the beginning of each template, specify placeholders by adding a line like `Placeholders: [placeholder_name_1],[placeholder_name_2]`. Avoid spaces between placeholders.
 
-   For instance: `Placeholder: [project_name],[author_name]`
+   For instance: `Placeholders: [project_name],[author_name]`
 
 When you use the tool, it will prompt you to input values for each of these placeholders. The tool will then replace all occurrences of the placeholders throughout the file with your input.
 
