@@ -49,6 +49,10 @@ If you don't have cargo installed, you can download the executable from the [rel
 ```bash
 readme-generator
 ```
+```bash
+# To use a path to custom templates other than the default ~/Documents/readme-templates
+readme-generator --template-dir path/to/custom/templates
+```
 
 ## Contributing
 Fork the repository

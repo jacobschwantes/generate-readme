@@ -1,7 +1,7 @@
 use dialoguer::console::Style;
 use dialoguer::{theme::ColorfulTheme, Input, MultiSelect, Select};
 
-pub fn select(options: &Vec<String>, prompt: String, default: usize) -> String {
+pub fn select(options: Vec<&str>, prompt: &str, default: usize) -> String {
     let selection = Select::with_theme(&ColorfulTheme::default())
         .with_prompt(prompt)
         .default(default)
@@ -9,10 +9,10 @@ pub fn select(options: &Vec<String>, prompt: String, default: usize) -> String {
         .max_length(10)
         .interact()
         .unwrap();
-    options[selection].clone()
+    options[selection].to_string()
 }
 
-pub fn input(prompt: &String, default: &String) -> String {
+pub fn input(prompt: &str, default: &str) -> String {
     Input::with_theme(&ColorfulTheme::default())
         .with_prompt(prompt)
         .default(default.to_string())
@@ -20,7 +20,7 @@ pub fn input(prompt: &String, default: &String) -> String {
         .unwrap()
 }
 
-pub fn multi_select(options: &Vec<String>, prompt: &str, defaults: Vec<bool>) -> Vec<usize> {
+pub fn multi_select(options: &Vec<&str>, prompt: &str, defaults: Vec<bool>) -> Vec<usize> {
     MultiSelect::with_theme(&ColorfulTheme::default())
         .with_prompt(prompt)
         .items(&options)
@@ -29,14 +29,14 @@ pub fn multi_select(options: &Vec<String>, prompt: &str, defaults: Vec<bool>) ->
         .unwrap()
 }
 
-pub fn confirm(prompt: &String) -> bool {
+pub fn confirm(prompt: &str) -> bool {
     dialoguer::Confirm::with_theme(&ColorfulTheme::default())
         .with_prompt(prompt)
         .interact()
         .unwrap()
 }
 
-pub fn message(message: Result<String, String>) {
+pub fn message(message: Result<&str, String>) {
     match message {
         Ok(message) => println!(
             "{}",

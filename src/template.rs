@@ -3,7 +3,7 @@ use crate::ui::{self, message};
 use clipboard::{ClipboardContext, ClipboardProvider};
 use include_dir::{include_dir, Dir};
 use std::fs::{self};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 static TEMPLATES_DIR: Dir = include_dir!("templates");
 pub struct Template {
@@ -28,11 +28,9 @@ pub fn load_standard_templates() -> Vec<Template> {
     templates
 }
 
-pub fn load_custom_templates() -> Result<Vec<Template>, String> {
-    // TODO: add support for setting/reading from custom templates directory
-    let templates_dir = dirs::document_dir().unwrap().join("readme-templates");
+pub fn load_custom_templates(dir: PathBuf) -> Result<Vec<Template>, String> {
     let mut templates: Vec<Template> = vec![];
-    match fs::read_dir(templates_dir) {
+    match fs::read_dir(&dir) {
         Ok(entries) => {
             for entry in entries {
                 match entry {
@@ -56,7 +54,7 @@ pub fn load_custom_templates() -> Result<Vec<Template>, String> {
         Err(err) => return Err(err.to_string()),
     }
     match templates.is_empty() {
-        true => Err("No templates found in ~/readme-templates".to_string()),
+        true => Err(format!("No templates found in ~{}", dir.to_str().unwrap())),
         false => Ok(templates),
     }
 }
@@ -129,7 +127,7 @@ pub fn fill_placeholders(content: String, placeholders: Vec<String>) -> String {
             .replace("]", "")
             .replace("_", " ")
             .to_string();
-        let user_input = ui::input(&format!("Enter a {}", formated), &formated);
+        let user_input = ui::input(&format!("Enter {}", formated), &formated);
         replaced = replaced.replace(&placeholder, &user_input)
     }
     replaced
@@ -151,12 +149,12 @@ fn is_valid_filename(filename: &str) -> bool {
 
 pub fn write_file(content: String) {
     let selection = ui::select(
-        &vec![
-            "Save to current directory".to_string(),
-            "Copy to clipboard".to_string(),
-            "Output to console".to_string(),
+        vec![
+            "Save to current directory",
+            "Copy to clipboard",
+            "Output to console",
         ],
-        "What would you like to do with the generated README?".to_string(),
+        "What would you like to do with the generated README?",
         0,
     );
 
@@ -164,14 +162,14 @@ pub fn write_file(content: String) {
         "Copy to clipboard" => {
             let mut clipboard: ClipboardContext = ClipboardProvider::new().unwrap();
             clipboard.set_contents(content.to_owned()).unwrap();
-            ui::message(Ok("README copied to clipboard successfully".to_string()))
+            ui::message(Ok("README copied to clipboard successfully"))
         }
         "Save to current directory" => match Path::new("README.md").exists() {
             // file exists already, prompt user to overwrite
             true => match ui::confirm(&"README.md already exists. Overwrite?".to_string()) {
                 // overwrite
                 true => match fs::write("README.md", content) {
-                    Ok(_) => ui::message(Ok("README generated successfully".to_string())),
+                    Ok(_) => ui::message(Ok("README generated successfully")),
                     Err(err) => ui::message(Err(err.to_string())),
                 },
                 // don't overwrite
@@ -195,9 +193,7 @@ pub fn write_file(content: String) {
                             // recursively prompt user for new file name until valid
                             match get_file_name() {
                                 (true, new_file_name) => match fs::write(new_file_name, content) {
-                                    Ok(_) => {
-                                        ui::message(Ok("README generated successfully".to_string()))
-                                    }
+                                    Ok(_) => ui::message(Ok("README generated successfully")),
                                     Err(err) => ui::message(Err(err.to_string())),
                                 },
                                 (false, _) => {
@@ -215,7 +211,7 @@ pub fn write_file(content: String) {
             },
             // file doesn't exist, write to README.md
             false => match fs::write("README.md", content) {
-                Ok(_) => ui::message(Ok("README generated successfully".to_string())),
+                Ok(_) => ui::message(Ok("README generated successfully")),
                 Err(err) => ui::message(Err(err.to_string())),
             },
         },

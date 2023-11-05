@@ -1,6 +1,6 @@
 [package]
 name = "generate-readme"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Create templated README.md files from the terminal."
 repository = "https://github.com/jacobschwantes/readme-generator"
@@ -13,3 +13,4 @@ dialoguer = "0.11.0"
 dirs = "5.0.1"
 clipboard = "0.5.0"
 include_dir = "0.7.3"
+clap = "4.4.7"
