@@ -17,7 +17,7 @@ Generate `README.md` files effortlessly using this lightweight command line util
 
 When you use the tool, it will prompt you to input values for each of these placeholders. The tool will then replace all occurrences of the placeholders throughout the file with your input.
 
-## A Few Points to Remember:
+### A few things to note:
 - **Placeholders are Optional**: You can choose to include them or not.
 - **No Spaces in Placeholder List**: Ensure there's no space between the placeholders you list.
   
@@ -31,18 +31,18 @@ If you would like to see some examples, check the templates folder.
 ### Using cargo
 
 ```bash
-cargo install readme-generator
+cargo install generate-readme
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/jacobschwantes/readme-generator.git
-cd readme-generator
+git clone https://github.com/jacobschwantes/generate-readme.git
+cd generate-readme
 cargo install --path .
 ```
 <!-- 
-If you don't have cargo installed, you can download the executable from the [releases](readme-generator/releases) section. -->
+If you don't have cargo installed, you can download the executable from the [releases](generate-readme/releases) section. -->
 
 ## Usage
 
