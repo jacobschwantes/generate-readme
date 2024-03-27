@@ -1,10 +1,12 @@
 [package]
 name = "generate-readme"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 description = "A command-line utlity to help you generate README.md files."
 repository = "https://github.com/jacobschwantes/generate-readme"
 license = "MIT"
+categories = ["command-line-utilities", "template-engine"]
+keywords = ["readme", "generator", "markdown", "cli", "documentation"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
